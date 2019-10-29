@@ -36,8 +36,8 @@ pcl::PointCloud<pcl::PointXYZ> getOneSphere() {
     float angle_height = PI/cloud.height;
     float angle_width = 2*PI/cloud.width;
 
-    std::cout << angle_height << std::endl;
-    std::cout << angle_width << std::endl;
+    //std::cout << angle_height << std::endl;
+    //std::cout << angle_width << std::endl;
 
     for (size_t i = 0; i < cloud.width; i++) {
         for (size_t j = 0; j < cloud.height; j++) {
@@ -60,6 +60,8 @@ pcl::PointCloud<pcl::PointXYZ> createObjects(std::string shape, int num) {
     cloud.height = 0;
     cloud.is_dense = false;
     cloud.points.resize(0);
+    
+    srand (time(NULL));
 
     for (int i = 0; i < num; i++) {
         if (shape == "s") {
@@ -94,8 +96,8 @@ int main (int argc, char** argv)
     pcl::io::savePCDFileASCII("test_pcd.pcd", cloud);
     std::cerr << "Saved " << cloud.points.size () << " data points to test_pcd.pcd." << std::endl;
 
-    for (size_t i = 0; i < cloud.points.size (); ++i)
-        std::cerr << "    " << cloud.points[i].x << " " << cloud.points[i].y << " " << cloud.points[i].z << std::endl;
+    //for (size_t i = 0; i < cloud.points.size (); ++i)
+    //    std::cerr << "    " << cloud.points[i].x << " " << cloud.points[i].y << " " << cloud.points[i].z << std::endl;
 
     return (0);
 }
