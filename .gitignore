@@ -1,3 +1,4 @@
 .DS_Store
 /pcloud_generator/build
+*/build
 *.swp
