@@ -4,6 +4,7 @@
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 #include <pcl/common/transforms.h>
+#include "../utility/utility.h"
 
 #define SPACE_RANGE_X   2
 #define SPACE_RANGE_Y   2

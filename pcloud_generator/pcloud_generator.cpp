@@ -4,12 +4,13 @@
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 #include <pcl/common/transforms.h>
+#include "../utility/utility.h"
 
-#define SPACE_RANGE_X   2
-#define SPACE_RANGE_Y   2
-#define SPACE_RANGE_Z   2
+#define SPACE_RANGE_X   1
+#define SPACE_RANGE_Y   1
+#define SPACE_RANGE_Z   1
 #define SCALE_MIN       1 //scale lower bound
-#define SCALE_MAX       3 //scale upper bound
+#define SCALE_MAX       1 //scale upper bound
 
 #define PI              3.14159265
 #define WIDTH           100
@@ -18,84 +19,6 @@
 #define EDGE            100 //number of points on an edge of a cube
 //#define NOISE 0.1
 
-// show pc info
-void centerAndNormalizePC(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud) {
-    float temp_length;
-    //get z_maz: tree height
-    float tree_height;
-    float x_min, x_max, y_min, y_max, z_min, z_max;
-    float x_sum = 0;
-    float y_sum = 0;
-    float z_sum = 0;
-    x_min = cloud->points[0].x;
-    x_max = cloud->points[0].x;
-    y_min = cloud->points[0].y;
-    y_max = cloud->points[0].y;
-    z_min = cloud->points[0].z;
-    z_max = cloud->points[0].z;
-    tree_height = 0;
-    for (int i = 0; i < cloud->points.size(); ++i){
-        x_sum += cloud->points[i].x;
-        y_sum += cloud->points[i].y;
-        z_sum += cloud->points[i].z;
-        if (cloud->points[i].x < x_min){
-                x_min = cloud->points[i].x;
-        }
-        if (cloud->points[i].x > x_max){
-                x_max = cloud->points[i].x;
-        }
-        if (cloud->points[i].y < y_min){
-                y_min = cloud->points[i].y;
-        }
-        if (cloud->points[i].y > y_max){
-                y_max = cloud->points[i].y;
-        }
-        if (cloud->points[i].z < z_min){
-                z_min = cloud->points[i].z;
-        }
-        if (cloud->points[i].z > z_max){
-                z_max = cloud->points[i].z;
-        }
-    }
-    float x_centroid = x_sum/cloud->points.size();
-    float y_centroid = y_sum/cloud->points.size();
-    float z_centroid = z_sum/cloud->points.size();
-    tree_height = z_max - z_min;
-    std::cout << "Input PC height: " << tree_height << std::endl;
-    std::cout << "         x range: " << x_min << " ~ " << x_max << std::endl; 
-    std::cout << "         y range: " << y_min << " ~ " << y_max << std::endl; 
-    std::cout << "         z range: " << z_min << " ~ " << z_max << std::endl;
-    std::cout << "         centroid: x: " << x_centroid << " y: " << y_centroid << " z: " << z_centroid << std::endl;
-
-    //shift point cloud to centroid
-    for (int i = 0; i < cloud->points.size(); ++i){
-        cloud->points[i].x = cloud->points[i].x - x_centroid;
-        cloud->points[i].y = cloud->points[i].y - y_centroid;
-        cloud->points[i].z = cloud->points[i].z - z_centroid;
-    }
-
-    //normalize point cloud
-    float x_diff = x_max - x_min;
-    float y_diff = y_max - y_min;
-    float z_diff = z_max - z_min;
-    std::cout << "input dimension: x " << x_diff << "; y " << y_diff << "; z " << z_diff << ";" << std::endl;
-    //find the maxima
-    float max = x_diff;
-    if (max < y_diff)
-        max = y_diff;
-    if (max < z_diff)
-        max = z_diff;
-    std::cout << "maxima: " << max << std::endl;
-    float ratio = 1/max;
-    for (int i = 0; i < cloud->points.size(); ++i){
-        cloud->points[i].x = cloud->points[i].x * ratio;
-        cloud->points[i].y = cloud->points[i].y * ratio;
-        cloud->points[i].z = cloud->points[i].z * ratio;
-    }
-   
-
-
-}
 
 Eigen::Matrix4f getRandomTransformMatrix(float space_range_x,
                                          float space_range_y,
@@ -344,7 +267,7 @@ pcl::PointCloud<pcl::PointXYZ> createObjectsUserDefine(std::string path, int num
     //pcl::PointCloud<PointT>::Ptr cloud (new pcl::PointCloud<PointT>);
     reader.read(path, *cloud_user_define);
 
-    centerAndNormalizePC(cloud_user_define);
+    center(cloud_user_define);
     
     srand (time(NULL));
 
