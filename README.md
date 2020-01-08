@@ -1,6 +1,6 @@
 # pcloud
 This is a research project for handling point cloud
-## Utilities
+## Functions
 ### 1. pcloud_generator
 This is a program to generate a PC with multiple object instance. Usage:
 
@@ -30,7 +30,11 @@ Where
 * nnr:
     * Noise number ration, which is the ratio of the number of noise point comparing to the point size of the original PC
 
+### 3. icp_test
+This is a program to test the build-in ICP function provided by PCL
 
+## Utilities
+utility/utility.h provides commonly used operations on PC
 
 ## Build
 
