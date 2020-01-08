@@ -7,12 +7,30 @@ This is a program to generate a PC with multiple object instance. Usage:
     $ ./pcloud_generator/build/pcloud [options] [input PC path]
 
 Where
-
 * options: 
     * s: Spheres
     * u: User defined
 * input PC path:
     * Path to the user defined PC, only needed whtn option is u
+
+### 2. add_noise
+This is a program to add noise to a PC
+
+    $ ./add_noise/build/add_noise [input PC path] [nrr_x] [nrr_y] [nrr_z] [nnr]
+
+Where
+* input PC path:
+    * Path to the user defined PC for add noise
+* nrr_x:
+    * Noise range ratio on x dimension
+* nnr_y:
+    * Noise range ratio on y dimension
+* nnr_z:
+    * Noise range ratio on z dimension
+* nnr:
+    * Noise number ration, which is the ratio of the number of noise point comparing to the point size of the original PC
+
+
 
 ## Build
 
